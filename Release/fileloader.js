@@ -24,8 +24,8 @@ Module.expectedDataFileDownloads++;
     var REMOTE_PACKAGE_NAME = typeof Module['locateFile'] === 'function' ?
                               Module['locateFile'](REMOTE_PACKAGE_BASE) :
                               ((Module['filePackagePrefixURL'] || '') + REMOTE_PACKAGE_BASE);
-    var REMOTE_PACKAGE_SIZE = 18315269;
-    var PACKAGE_UUID = 'bb08f3f5-4344-4271-8544-d253da909a1d';
+    var REMOTE_PACKAGE_SIZE = 27918104;
+    var PACKAGE_UUID = 'd1f9e479-9158-470c-9507-f4c95144c8a7';
   
     function fetchRemotePackage(packageName, packageSize, callback, errback) {
       var xhr = new XMLHttpRequest();
@@ -123,13 +123,12 @@ Module['FS_createPath']('/', 'Resources', true, true);
         this.requests[this.name] = null;
       },
     };
-      new DataRequest(0, 103900, 0, 0).open('GET', '/mainData');
-    new DataRequest(103900, 104552, 0, 0).open('GET', '/methods_pointedto_by_uievents.xml');
-    new DataRequest(104552, 398332, 0, 0).open('GET', '/resources.assets');
-    new DataRequest(398332, 10111940, 0, 0).open('GET', '/sharedassets0.assets');
-    new DataRequest(10111940, 16240789, 0, 0).open('GET', '/sharedassets0.resource');
-    new DataRequest(16240789, 17801161, 0, 0).open('GET', '/Resources/unity_default_resources');
-    new DataRequest(17801161, 18315269, 0, 0).open('GET', '/Resources/unity_builtin_extra');
+      new DataRequest(0, 102956, 0, 0).open('GET', '/mainData');
+    new DataRequest(102956, 103652, 0, 0).open('GET', '/methods_pointedto_by_uievents.xml');
+    new DataRequest(103652, 397432, 0, 0).open('GET', '/resources.assets');
+    new DataRequest(397432, 25843624, 0, 0).open('GET', '/sharedassets0.assets');
+    new DataRequest(25843624, 27403996, 0, 0).open('GET', '/Resources/unity_default_resources');
+    new DataRequest(27403996, 27918104, 0, 0).open('GET', '/Resources/unity_builtin_extra');
 
     function processPackageData(arrayBuffer) {
       Module.finishedDataFileDownloads++;
@@ -143,7 +142,6 @@ Module['FS_createPath']('/', 'Resources', true, true);
           DataRequest.prototype.requests["/methods_pointedto_by_uievents.xml"].onload();
           DataRequest.prototype.requests["/resources.assets"].onload();
           DataRequest.prototype.requests["/sharedassets0.assets"].onload();
-          DataRequest.prototype.requests["/sharedassets0.resource"].onload();
           DataRequest.prototype.requests["/Resources/unity_default_resources"].onload();
           DataRequest.prototype.requests["/Resources/unity_builtin_extra"].onload();
           Module['removeRunDependency']('datafile_webgl.data');
