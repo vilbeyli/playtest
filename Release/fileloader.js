@@ -1,22 +1,27 @@
 
 var Module;
+
 if (typeof Module === 'undefined') Module = eval('(function() { try { return Module || {} } catch(e) { return {} } })()');
+
 if (!Module.expectedDataFileDownloads) {
   Module.expectedDataFileDownloads = 0;
   Module.finishedDataFileDownloads = 0;
 }
 Module.expectedDataFileDownloads++;
 (function() {
+ var loadPackage = function(metadata) {
 
     var PACKAGE_PATH;
     if (typeof window === 'object') {
       PACKAGE_PATH = window['encodeURIComponent'](window.location.pathname.toString().substring(0, window.location.pathname.toString().lastIndexOf('/')) + '/');
-    } else {
+    } else if (typeof location !== 'undefined') {
       // worker
       PACKAGE_PATH = encodeURIComponent(location.pathname.toString().substring(0, location.pathname.toString().lastIndexOf('/')) + '/');
+    } else {
+      throw 'using preloaded data can only be done on a web page or in a web worker';
     }
-    var PACKAGE_NAME = 'webgl.data';
-    var REMOTE_PACKAGE_BASE = 'webgl.data';
+    var PACKAGE_NAME = 'webGL.data';
+    var REMOTE_PACKAGE_BASE = 'webGL.data';
     if (typeof Module['locateFilePackage'] === 'function' && !Module['locateFile']) {
       Module['locateFile'] = Module['locateFilePackage'];
       Module.printErr('warning: you defined Module.locateFilePackage, that has been renamed to Module.locateFile (using your locateFilePackage for now)');
@@ -24,9 +29,10 @@ Module.expectedDataFileDownloads++;
     var REMOTE_PACKAGE_NAME = typeof Module['locateFile'] === 'function' ?
                               Module['locateFile'](REMOTE_PACKAGE_BASE) :
                               ((Module['filePackagePrefixURL'] || '') + REMOTE_PACKAGE_BASE);
-    var REMOTE_PACKAGE_SIZE = 67935644;
-    var PACKAGE_UUID = '20deb6a7-086f-4cf2-8ced-820280714d6a';
   
+      var REMOTE_PACKAGE_SIZE = 7333712;
+      var PACKAGE_UUID = '87e65968-47f8-44a4-b0f8-8ea1c909bcda';
+    
     function fetchRemotePackage(packageName, packageSize, callback, errback) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', packageName, true);
@@ -84,9 +90,11 @@ Module.expectedDataFileDownloads++;
     
   function runWithFS() {
 
-function assert(check, msg) {
-  if (!check) throw msg + new Error().stack;
-}
+    function assert(check, msg) {
+      if (!check) throw msg + new Error().stack;
+    }
+Module['FS_createPath']('/', 'Il2CppData', true, true);
+Module['FS_createPath']('/Il2CppData', 'Metadata', true, true);
 Module['FS_createPath']('/', 'Resources', true, true);
 
     function DataRequest(start, end, crunched, audio) {
@@ -123,12 +131,13 @@ Module['FS_createPath']('/', 'Resources', true, true);
         this.requests[this.name] = null;
       },
     };
-      new DataRequest(0, 116748, 0, 0).open('GET', '/mainData');
-    new DataRequest(116748, 117552, 0, 0).open('GET', '/methods_pointedto_by_uievents.xml');
-    new DataRequest(117552, 412612, 0, 0).open('GET', '/resources.assets');
-    new DataRequest(412612, 65861164, 0, 0).open('GET', '/sharedassets0.assets');
-    new DataRequest(65861164, 67421536, 0, 0).open('GET', '/Resources/unity_default_resources');
-    new DataRequest(67421536, 67935644, 0, 0).open('GET', '/Resources/unity_builtin_extra');
+
+      new DataRequest(0, 157908, 0, 0).open('GET', '/mainData');
+    new DataRequest(157908, 158060, 0, 0).open('GET', '/methods_pointedto_by_uievents.xml');
+    new DataRequest(158060, 3495968, 0, 0).open('GET', '/sharedassets0.assets');
+    new DataRequest(3495968, 4942556, 0, 0).open('GET', '/Il2CppData/Metadata/global-metadata.dat');
+    new DataRequest(4942556, 6829980, 0, 0).open('GET', '/Resources/unity_default_resources');
+    new DataRequest(6829980, 7333712, 0, 0).open('GET', '/Resources/unity_builtin_extra');
 
     function processPackageData(arrayBuffer) {
       Module.finishedDataFileDownloads++;
@@ -140,14 +149,14 @@ Module['FS_createPath']('/', 'Resources', true, true);
       DataRequest.prototype.byteArray = byteArray;
           DataRequest.prototype.requests["/mainData"].onload();
           DataRequest.prototype.requests["/methods_pointedto_by_uievents.xml"].onload();
-          DataRequest.prototype.requests["/resources.assets"].onload();
           DataRequest.prototype.requests["/sharedassets0.assets"].onload();
+          DataRequest.prototype.requests["/Il2CppData/Metadata/global-metadata.dat"].onload();
           DataRequest.prototype.requests["/Resources/unity_default_resources"].onload();
           DataRequest.prototype.requests["/Resources/unity_builtin_extra"].onload();
-          Module['removeRunDependency']('datafile_webgl.data');
+          Module['removeRunDependency']('datafile_webGL.data');
 
     };
-    Module['addRunDependency']('datafile_webgl.data');
+    Module['addRunDependency']('datafile_webGL.data');
   
     if (!Module.preloadResults) Module.preloadResults = {};
   
@@ -166,5 +175,8 @@ Module['FS_createPath']('/', 'Resources', true, true);
     if (!Module['preRun']) Module['preRun'] = [];
     Module["preRun"].push(runWithFS); // FS is not initialized yet, wait for it
   }
+
+ }
+ loadPackage();
 
 })();
